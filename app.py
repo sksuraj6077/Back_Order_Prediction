@@ -1,8 +1,7 @@
 from flask import Flask,request,render_template
 import numpy as np
 import pandas as pd
-
-from sklearn.preprocessing import StandardScaler
+from src.logger import logging
 from src.pipeline.prediction_pipeline import CustomData,PredictPipeline
 
 application=Flask(__name__)
@@ -42,20 +41,23 @@ def predict_datapoint():
     )   
     print(data)
     pred_df=data.get_data_as_data_frame()
-    print(pred_df)
-        #print(CustomData.national_inv)
-    print("Before Prediction")
+    #print(CustomData.national_inv)
 
+    logging.info("User Data\n {}".format(pred_df))
     predict_pipeline=PredictPipeline()
-    print("Mid Prediction")
+    logging.info("Prediction Started")
     results=predict_pipeline.predict(pred_df)
-    print("after Prediction")
+    #print("after Prediction")
     def output(result):
         if result[0]==0:
+            logging.info("Output : No")
             return "No"
         else:
+            logging.info("Output : Yes")
             return "Yes"
+    logging.info("Prediction Completed")
     return render_template('result.html',results=output(results))
+
     
 
 
