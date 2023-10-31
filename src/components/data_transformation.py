@@ -16,6 +16,9 @@ from src.utils import save_object
 @dataclass
 class DataTransformationConfig:
     preprocessor_obj_file_path=os.path.join('artifacts','preprocessor.pkl')
+    preprocessor1_obj_file_path=os.path.join('artifacts','preprocessor1.pkl')
+    
+    
 
 class DataTransformation:
     def __init__(self):
@@ -95,8 +98,17 @@ class DataTransformation:
             ('cat_pipeline',cat_pipeline,categorical_columns),
             ('out_pipeline',target_pipeline,target_colums)]
             )
+
+#--------------------------------------------------------------------------------------------------------------------------------------
+ 
+            preprocessor1=ColumnTransformer([
             
-            return preprocessor
+            ('num_pipeline',num_pipeline,numerical_columns),
+            ('cat_pipeline',cat_pipeline,categorical_columns)]
+            )
+
+            
+            return preprocessor , preprocessor1
 
             logging.info('Pipeline Completed')
 
@@ -116,7 +128,7 @@ class DataTransformation:
 
             logging.info('Obtaining preprocessing object')
 
-            preprocessing_obj = self.get_data_transformation_object()
+            preprocessing_obj,preprocessor1_obj= self.get_data_transformation_object()
 
             #target_column_name = 'went_on_backorder'
             drop_columns = ["Unnamed: 0",'sku']
@@ -132,6 +144,11 @@ class DataTransformation:
             
             input_feature_test_arr=preprocessing_obj.transform(input_feature_test_df)
 
+            #-------------------------------------------------------------------
+            zand=preprocessor1_obj.fit_transform(input_feature_train_df)
+
+
+
             #logging.info(f'Train Dataframe Head : \n{input_feature_train_arr.to_string()}')
             #logging.info(f'Test Dataframe Head  : \n{input_feature_test_arr.to_string()}')
 
@@ -144,6 +161,13 @@ class DataTransformation:
 
                 file_path=self.data_transformation_config.preprocessor_obj_file_path,
                 obj=preprocessing_obj
+
+            )
+
+            save_object(
+
+                file_path=self.data_transformation_config.preprocessor1_obj_file_path,
+                obj=preprocessor1_obj
 
             )
             logging.info('Preprocessor pickle file saved')

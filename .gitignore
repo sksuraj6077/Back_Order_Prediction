@@ -12,7 +12,7 @@ notebooks
 *.so
 
 # Distribution / packaging
-.Python
+.Pythongit 
 build/
 develop-eggs/
 dist/

@@ -40,7 +40,7 @@ def evaluate_model(X_train,y_train,X_test,y_test,models):
             accuracy = accuracy_score(y_test,y_test_pred)
             f1 = f1_score(y_test,y_test_pred, average='weighted')
 
-            report[list(models.keys())[i]] =  accuracy
+            report[list(models.keys())[i]] =  f1
 
         return report
 
