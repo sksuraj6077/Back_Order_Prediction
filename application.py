@@ -3,12 +3,14 @@ import numpy as np
 import pandas as pd
 from src.logger import logging
 from src.pipeline.prediction_pipeline import CustomData,PredictPipeline
+from flask_sqlalchemy import SQLAlchemy
 
 application=Flask(__name__)
-
-app=application
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///backorder.db'
+# db = SQLAlchemy(app)
 
 ## Route for a home page
+app=application
 
 @app.route('/')
 def index():
@@ -62,7 +64,7 @@ def predict_datapoint():
 
 
 if __name__=="__main__":
-    app.run(host="0.0.0.0",port=5000,debug=True)        
+    app.run(host="0.0.0.0")        
 
         
         
