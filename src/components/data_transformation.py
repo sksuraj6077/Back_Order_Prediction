@@ -131,7 +131,7 @@ class DataTransformation:
             preprocessing_obj,preprocessor1_obj= self.get_data_transformation_object()
 
             #target_column_name = 'went_on_backorder'
-            drop_columns = ["Unnamed: 0",'sku']
+            drop_columns = ['sku']  #"Unnamed: 0",
 
             input_feature_train_df = train_df.drop(columns=drop_columns,axis=1)
             #target_feature_train_df=train_df[target_column_name]
